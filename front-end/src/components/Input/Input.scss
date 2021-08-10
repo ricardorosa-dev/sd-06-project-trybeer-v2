@@ -1,0 +1,14 @@
+@import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
+
+.defaultInput {
+  @include flexBox(column);
+  margin: 15px 0px;
+
+  label {
+    align-self: flex-start;
+    font-size: $font-medium;
+    font-weight: bold;
+    color: $lighterYellow;
+  }
+}

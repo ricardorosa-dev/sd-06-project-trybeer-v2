@@ -39,7 +39,7 @@ jobs:
       mysql:
         image: mysql:8.0.21
         env:
-          MYSQL_ROOT_PASSWORD: 'password'
+          MYSQL_ROOT_PASSWORD: '22316bnmop'
         ports:
           - 3306:3306
           - 33060:33060
@@ -63,7 +63,7 @@ jobs:
           DB_URL: 'mongodb://mongodb:27017/Trybeer'
           SCHEMA: 'Trybeer'
           DB_NAME: 'Trybeer'
-          GITHUB_USER: ${{ github.actor }} 
+          GITHUB_USER: 'ricardorosa-dev' 
       - name: Store evaluation step
         uses: betrybe/store-evaluation-action@v2
         with:

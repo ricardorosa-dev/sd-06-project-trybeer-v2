@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import '../../../assets//scss/variables.scss';
+
+.profileForm {
+  border: 1px solid;
+  font-family: $main-font;
+  width: 50%;
+  margin: 30px auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  
+  @media screen and (max-width: 600px) {
+    width: 85%;
+    margin: 30px auto;
+  }
+  
+  h2 {
+    margin: 0;
+  }
+  
+  input {
+    width: 300px;
+    margin: 10px 0;
+  }
+  
+  .disabledButton {
+    background-color: $lightGray;
+  }
+  
+  button {
+    cursor: pointer;
+    width: 315px;
+    font-family: $main-font;
+    font-size: 25px;
+    background-color: $lighterGreen;
+    border: 0;
+    border-radius: 5px 10px 5px 10px;
+    padding: 5px;
+    
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+// .logo-perfil {
+//   width: 25%;
+//   padding-left: 38%;
+//   padding-top: 5%;
+//   padding-bottom: 4%;
+// }
+
+// .logo-name {
+//   width: 13%;
+//   padding-left: 2%;
+//   padding-top: 2%;
+// }
+
+// .div-input {
+//   display: flex;
+//   flex-direction: row;
+//   padding-left: 4%;
+// }
+
+// .input-profile {
+//   padding-left: 5%;
+// }
+
+// .input-email {
+//   padding-left: 5%;
+//   padding-top: 3%;
+// }
+
+// .div-button {
+//   padding-top: 5%;
+//   padding-left: 40%;
+// }
+
+// .att-name {
+//   padding-top: 7%;
+//   text-align: center;
+//   font-family: 'Montserrat', sans-serif;
+//   font-size: calc(13px + 1.7vw);
+//   color: #255923;
+// }

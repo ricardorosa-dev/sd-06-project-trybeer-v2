@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import '../../../assets/scss/variables.scss';
+
+
+.orderDetailsContainer {
+  border: 1px solid;
+  padding: 10px;
+  
+  h1 {
+    display: flex;
+    padding-left: 20px;
+    
+    div {
+      flex-grow: 1;
+    }
+    
+    .orderStatus {
+      color: $lightGreen;
+    }
+    
+    .orderDate {
+      font-weight: 400;
+      font-size: 80%;
+      margin: 0;
+    }
+  }
+}
+
+.buttonsContainer {
+  // border: 1px solid;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  
+  button {
+  width: 30%;
+  padding: 10px 0;
+  border: 0;
+  border-radius: 5px 10px 5px 10px;
+  background-color: $lightGreen;
+  font-family: $main-font;
+  font-size: 20px;
+  }
+}
+
+.backButtonContainer {
+  // border: 1px solid;
+  display: flex;
+  justify-content: center;
+  
+  button {
+    margin: 10px 0;
+    width: 200px;
+    height: 40px;
+    font-family: $main-font;
+    font-size: 20px;
+  }
+}
+
+.sale-details {
+  // border: 1px solid;
+  display: inline-block;
+  text-align: right;
+  margin-left: 30%;
+  font-family: $main-font;
+  font-size: calc(13px + 1.7vw);
+  color: #255923;
+  
+  li {
+    list-style-type: none;
+  }
+  
+  h2 {
+    margin: 10px 0;
+  }
+}
+
+.detalhes-admin {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 5px ridge #F2BA52;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: calc(8px + 1.5vw);
+  box-shadow: 4px 4px 4px rgb(204, 204, 204);
+}
+
+.title-div-admin {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-around;
+  padding-left: 4%;
+}
+
+.itemStatus.itemPending-admin {
+  color: #F2BA52;
+}
+
+.itemStatus.itemDelivered-admin {
+  color: #338b2f;
+}
+
+.price-admin {
+  display: flex;
+  flex-direction: row;
+  padding-left: 60%;
+}
+
+.total-price-admin {
+  width: 20%;
+  height: 35%;
+  padding-top: 8%;
+  padding-right: 2%;
+}
+
+.quantity-admin{
+  width: 5%;
+}
+
+.total-admin{
+  width: 20%;
+}
+
+.name-admin{
+  width: 45%;
+}
+
+.unit-admin{
+  width: 20%;
+}

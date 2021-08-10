@@ -1,0 +1,81 @@
+@import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
+
+.hamburger {
+  z-index: 10;
+}
+
+span.hamburger-inner, span.hamburger-inner::after, span.hamburger-inner::before {
+  background-color: white;
+}
+
+.header {
+  @include flexBox(row, center, center);
+  position: relative;
+  overflow-x: hidden;
+  width: 100vw;
+  background-color: $darkerGreen;
+  color: white;
+  padding: 0.5rem;
+}
+
+.title {
+  margin: auto;
+}
+
+.side-menu-container {
+  // border: 1px solid red;
+  font-family: $main-font;
+  position: fixed;
+  background-color: $darkerGreen;
+  top: 0;
+  right: -100vw;
+  height: 100vh;
+  width: 50vw;
+  transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 1s;
+  z-index: 9;
+  
+  ul {
+    border: 1px solid $lightGray;
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 75%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 1em;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+  
+  button {
+    cursor: pointer;
+    border: 0;
+    color: $lightGray;
+    font-family: $main-font;
+    font-size: 30px;
+    background: inherit;
+  }
+}
+
+.active {
+  width: 100vw;
+  transition: 1s;
+  right: 0vw;
+}
+
+@media (max-width: 600px) {
+  .side-menu-container {
+    height: 105vh;
+  }
+  
+  .active {
+    width: 105vw;
+  }
+}
