@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+.adminOrderCard {
+  width: 200px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: calc(7px + 1.2vw);
+  display: inline-block;
+  color:  #193D17;
+  border-radius: 2px;
+  padding: 15px 20px;
+  margin: 1%;
+  border: 1px solid rgb(231, 230, 230);
+  box-shadow: 4px 4px 4px rgb(204, 204, 204);
+}
+
+@media (max-width: 600px) {
+  .adminOrderCard {
+    width: 90%;
+  }
+}
+
+.title-order {
+  text-align: center;
+  color: #F29F05;
+}
+.adminOrderCard h2 {
+  margin-top: 0;
+}
+
+.adminOrderCard .itemStatus {
+  font-size: 1.05rem;
+  font-weight: bold;
+  float: right;
+}
+
+.adminOrderCard .itemStatus.itemPending {
+  color: #F2BA52;
+  border: 1px solid  #F2BA52;
+  padding: 1%;
+  box-shadow: 2px 1px 10px rgb(230, 236, 149);
+}
+
+.adminOrderCard .itemStatus.itemDelivered {
+  color: #338b2f;
+  border: 1px solid  #338b2f;
+  padding: 1%;
+  box-shadow: 2px 1px 10px rgb(221, 240, 218);
+}
+
+.adminOrderCard:hover {
+  transform: scale(1.02);
+  transition: .2s;
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1); 
+  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);
+}
+
+.address {
+  width: 10%;
+  height: 75%;
+  padding-top: 2%;
+}
+
+.full-address {
+  display: flex;
+  flex-direction: row;
+}
+
+.total-address {
+  padding-left: 2%;
+  padding-top: 2%;
+}
+
+.total-order {
+  width: 10%;
+  height: 70%;
+  /* padding-top: 15%; */
+}
+
+.div-total-price {
+  display: flex;
+  flex-direction: row;
+}
+.total-value {
+  padding-top: 2%;
+  padding-left: 2%;
+}

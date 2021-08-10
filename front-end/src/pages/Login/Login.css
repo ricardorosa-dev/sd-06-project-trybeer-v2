@@ -1,28 +1,28 @@
 button {
+  width: 12rem;
+  height: 2rem;
   background: rgb(143, 194, 132);
   cursor: pointer;
-  height: 2rem;
-  width: 12rem;
 }
 
 button:hover {
-  box-shadow: 0 0 1rem rgb(227, 240, 227);
+  box-shadow: 0rem 0rem 1rem rgb(227, 240, 227);
 }
 
 button:disabled {
-  background: rgb(201, 154, 154);
   cursor: not-allowed;
+  background: rgb(201, 154, 154);
 }
 
-.btn-disabled:not( [ disabled ] ) {
+.btn-disabled:not([disabled]){
   background-color: rgb(143, 194, 132);
 }
 
 input {
-  font-size: 16px bold italic;
-  height: 2rem;
-  text-shadow: 2px 1px 3px white;
   width: 20rem;
+  height: 2rem;
+  font-size: 16px bold italic;
+  text-shadow: 2px 1px 3px white;
 }
 
 .loginForm {
@@ -32,19 +32,19 @@ input {
   background-size: contain;
   display: flex;
   flex-direction: row;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
-  width: 100vw;
 }
 
 .loginInput {
-  align-items: center;
+  margin: 2rem 2rem ;
+  padding: 1rem;
+  width: 25rem;
+  height: 13rem;
   border: 10px groove rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  height: 13rem;
   justify-content: space-between;
-  margin: 2rem;
-  padding: 1rem;
-  width: 25rem;
+  align-items: center;
 }

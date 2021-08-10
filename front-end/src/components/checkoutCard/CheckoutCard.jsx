@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './CheckoutCard.scss';
 
 const deleteProduct = (product, changeState) => {
   const storage = JSON.parse(localStorage.getItem('cart'));
@@ -18,28 +19,29 @@ const CheckoutCard = ({ product, changeState, specialNumber }) => {
   const editFullPrice = `R$ ${fullPrice.toString().replace('.', ',')}`;
 
   return (
-    <div>
-      <span data-testid={ `${specialNumber}-product-qtd-input` }>
+    <tr>
+      <td data-testid={ `${specialNumber}-product-qtd-input` }>
         {quantity}
-      </span>
-      <span data-testid={ `${specialNumber}-product-name` }>
-        -
-        {name}
-      </span>
-      <span data-testid={ `${specialNumber}-product-total-value` }>
+      </td>
+      <td data-testid={ `${specialNumber}-product-name` }>
+      {name}
+      </td>
+      <td data-testid={ `${specialNumber}-product-total-value` }>
         { editFullPrice }
-      </span>
-      <span data-testid={ `${specialNumber}-product-unit-price` }>
+      </td>
+      <td data-testid={ `${specialNumber}-product-unit-price` }>
         {`(${editPrice} un)`}
-      </span>
-      <button
-        data-testid={ `${specialNumber}-removal-button` }
-        type="button"
-        onClick={ () => deleteProduct(product, changeState) }
-      >
-        EXCLUIR
-      </button>
-    </div>
+      </td>
+      <td>
+        <button
+          data-testid={ `${specialNumber}-removal-button` }
+          type="button"
+          onClick={ () => deleteProduct(product, changeState) }
+        >
+          {(window.screen.width > 600) ? 'EXCLUIR' : 'X' }
+        </button>
+      </td>
+      </tr>
   );
 };
 

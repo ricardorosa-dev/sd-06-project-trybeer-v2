@@ -1,0 +1,50 @@
+@import '../../assets/scss/variables.scss';
+
+.productsContainer {
+  // border: 1px solid;
+  margin-left: 10px;
+  font-family: $main-font;
+  font-weight: 600;
+  // font-size: 4vw;
+  // display: flex;
+  // flex-wrap: wrap;
+}
+
+.productCards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .productsContainer {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  
+  .productCards {
+    // border: 1px solid;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.checkoutButton {
+  border: 0;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  padding: 10px 0;
+  background-color: $darkerGreen;
+  color: white;
+  font-family: $main-font;
+  font-size: 30px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .checkoutButton {
+    // position: fixed;
+    // bottom: 0;
+  }
+}

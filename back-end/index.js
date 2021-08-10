@@ -22,12 +22,6 @@ const { createMessages } = require('./chat/models/mongoModel');
 const port = 3001;
 const portSocket = 4001;
 
-// const hora = () => {
-//   const allTime = new Date().toLocaleTimeString().split(':');
-//   const time = `${allTime[0]}:${allTime[1]}`;
-//   return time;
-// };
-
 const hora = () => {
   const dNow = new Date();
   const min = () => {
@@ -47,22 +41,14 @@ const hora = () => {
 };
 
 io.on('connection', (socket) => {
-  socket.on('message', async ({ user, message, Loja }) => {
-    const time = hora();
-    // console.log(userBack, time, msg, Loja);
-    if (user !== undefined) {
-      createMessages(user, time, message, Loja);
+  console.log('Usuario conectado');
+  socket.on('message', async ({ from, to, message }) => {
+    const time = new Date();
+    if (from !== undefined) {
+      createMessages(from, to, message, time);
+      io.emit('messages', { from, to, message, time }); 
     }
-    io.emit('messages', { user, time, message, Loja });
   });
-
-  // socket.on('adminMsg', async () => {
-  //   io.emit('Mensagem do admin pro cliente');
-  // });
-
-  // socket.on('clientMsg', async () => {
-  //   io.emit('Mensagem do cliente pro admin');
-  // });
 });
 
 app.use(cors());

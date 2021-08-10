@@ -1,5 +1,12 @@
 const { Router } = require('express');
-const { createMessages, getAllMessages, getUserMessages } = require('../models/mongoModel');
+const {
+  createMessages,
+  getAllMessages,
+  getUserMessages,
+  getMsgUsers,
+  createUser,
+  getAllUsers,
+} = require('../models/mongoModel');
 // const {
 //   getAllUsersService,
 //   createUserService,
@@ -11,19 +18,41 @@ const routerMessage = Router();
 const CREATED = 201;
 const SUCCESS = 200;
 
-routerMessage.post('/', async (req, res) => {
-  const { user, time, message, to } = req.body;
-  console.log(user, time, message, to);
-  const messageCreated = await createMessages(user, time, message, to);
+// USERS
+routerMessage.post('/users', async (req, res) => {
+  const { name, email, level } = req.body;
+  const messageCreated = await createUser(name, email, level);
   return res.status(CREATED).json(messageCreated);
 });
 
-routerMessage.get('/', async (req, res) => {
+routerMessage.get('/users', async (req, res) => {
+  const allUsers = await getAllUsers();
+  console.log(allUsers);
+  return res.status(SUCCESS).json(allUsers);
+});
+
+// MESSAGES
+routerMessage.post('/messages', async (req, res) => {
+  // Testar se o 'from' e o 'to' existem antes de criar a mensagem (seria no Service)
+  
+  const { from, to, message } = req.body;
+  const time = new Date();
+  const messageCreated = await createMessages(from, to, message, time);
+  return res.status(CREATED).json(messageCreated);
+});
+
+routerMessage.get('/messages', async (req, res) => {
   const allMessages = await getAllMessages();
   return res.status(SUCCESS).json(allMessages);
 });
 
-routerMessage.get('/userMessages/:email', async (req, res) => {
+routerMessage.get('/messages/numbers', async (req, res) => {
+  const usersMessages = await getMsgUsers();
+  console.log(usersMessages);
+  return res.status(SUCCESS).json(usersMessages);
+});
+
+routerMessage.get('/messages/:email', async (req, res) => {
   const { email } = req.params;
   const messages = await getUserMessages(email);
   

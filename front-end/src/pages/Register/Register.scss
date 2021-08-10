@@ -1,0 +1,27 @@
+@import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
+
+.register-inputs {    
+  @include flexBox(column, space-around);
+  font-family: $main-font;
+  height: 15vh;
+  
+  input, button {
+    font-size: 1.5em;
+    margin-top: 1em;
+  }
+}
+
+.register-bg {
+  @include flexBox(column, space-around);
+  font-family: $main-font;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/images/bgs/bg2.jpg');
+  background-size: cover;
+}
+
+.loading-gif {
+  width: 100vw;
+  height: 100vh;
+}

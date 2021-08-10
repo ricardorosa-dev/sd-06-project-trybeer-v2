@@ -43,7 +43,9 @@ userRouter.post('/login', async (req, res, next) => {
 
 userRouter.post('/register', async (req, res, next) => {
   const { body: username, body: { name, email, role } } = req;
-  const resultRegister = await registerUserService(username); 
+  const resultRegister = await registerUserService(username);
+  // console.log(resultRegister.dataValues.id);
+  const { id } = resultRegister.dataValues;
   try {
     if (!resultRegister) {
       throw new ThrowError(status.CONFLICT, messages.EMAIL_EXISTS);
@@ -55,8 +57,7 @@ userRouter.post('/register', async (req, res, next) => {
       throw new ThrowError(status.INTERNAL_ERROR, messages.DEFAULT_ERROR);
     }
     const token = jwtSign(payload, secret, jwtConfig);
-    return res.status(status.CREATED)
-      .json({ token, name, email, role });
+    return res.status(status.CREATED).json({ token, name, email, role, id });
   } catch (error) {
     next(error);
   }

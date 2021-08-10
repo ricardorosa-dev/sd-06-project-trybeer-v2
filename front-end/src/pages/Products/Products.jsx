@@ -5,10 +5,7 @@ import { getProducts } from '../../services/Products';
 import DrinkCard from '../../components/DrinkCard/DrinkCard';
 import { verifyUser } from '../../store/LocalStorage/actions';
 import { getFullCartPrice, getCart } from '../../store/LocalStorage/provider';
-
-// O botão 'Ver Carrinho' deverá conter a tag data-testid="checkout-bottom-btn"
-
-// O valor total do carrinho deverá conter a tag data-testid="checkout-bottom-btn-value"
+import './Products.scss';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -26,7 +23,6 @@ export default function Products() {
   }, [history]);
 
   const handleRedirect = () => {
-    // history.push('/checkout'); !!!Adicionei passar a soma total como props
     history.push({
       pathname: '/checkout',
       state: { sum: cartSum },
@@ -36,25 +32,27 @@ export default function Products() {
   return (
     <div>
       <Header title="TryBeer" user="client" />
-      {products.map((product, index) => (
-        <DrinkCard
-          product={ product }
-          key={ product.id }
-          index={ index }
-          setCartSum={ setCartSum }
-        />
-      ))}
-      <button
-        data-testid="checkout-bottom-btn"
-        onClick={ handleRedirect }
-        type="button"
-        disabled={ !getCart() || !getCart().length }
-      >
-        Ver Carrinho
-        <p data-testid="checkout-bottom-btn-value">
-          {cartSum || 'R$ 0,00'}
-        </p>
-      </button>
+      <div className="productsContainer">
+        <div className="productCards">
+          {products.map((product, index) => (
+            <DrinkCard
+              product={ product }
+              key={ product.id }
+              index={ index }
+              setCartSum={ setCartSum }
+            />
+          ))}
+        </div>
+        <button
+          className="checkoutButton"
+          data-testid="checkout-bottom-btn"
+          onClick={ handleRedirect }
+          type="button"
+          disabled={ !getCart() || !getCart().length }
+        >
+          Ver Carrinho ({cartSum || 'R$ 0,00'})
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,19 @@
+.checkout-item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: none;
+  border-radius: 3px;
+  background-color: #F29F05;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-around;
+  border: 5px ridge #F2BA52;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: calc(10px + 1.7vw);
+  box-shadow: 4px 4px 4px rgb(204, 204, 204);
+  padding: 10px;
+}

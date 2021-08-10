@@ -4,10 +4,13 @@ import Header from '../../../components/Header/Header';
 import { getAdminSaleDetails, updateProductStatus } from '../../../services/Sales';
 import capitalize from '../../../utils/capitalize';
 import { parseCartPrice } from '../../../utils/parseValues';
-import './AdminOrdersDetail.css';
+import './AdminOrdersDetail.scss';
+import { useHistory } from 'react-router';
 
 export default function AdminOrdersDetail({ match: { params: { id } } }) {
   const [saleDetails, setSaleDetails] = useState({});
+  
+  const history = useHistory();
 
   useEffect(() => {
     const fetchSale = async () => {
@@ -42,71 +45,74 @@ export default function AdminOrdersDetail({ match: { params: { id } } }) {
 
     <div>
       <Header title="TryBeer" user="admin" />
-      {saleProducts && (
-        <>
-          <h1>
-            <span data-testid="order-number">
-              {`Pedido ${id}`}
-            </span>
-            <span data-testid="order-status">{sale && capitalize(sale.status)}</span>
-          </h1>
-          <div className="sale-details">
-            <ul>
-              {saleProducts.map(({ quantity, name, price }, index) => (
-                <li key={ index }>
-                  <p data-testid={ `${index}-product-qtd` }>
-                    {quantity}
-                  </p>
-                  <p data-testid={ `${index}-product-name` }>
-                    {name}
-                  </p>
-                  <p data-testid={ `${index}-order-unit-price` }>
-                    {`(${parseCartPrice(price)})`}
-                  </p>
-                  <p data-testid={ `${index}-product-total-value` }>
-                    {parseCartPrice(price * quantity)}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <h2 data-testid="order-total-value">
-              {sale && parseCartPrice(Number(sale.totalPrice))}
-            </h2>
-          </div>
-
-          {sale && sale.status === 'Pendente' && (
-            <div>
-              <button
-                type="button"
-                data-testid="mark-as-prepared-btn"
-                onClick={ setAsPreparing }
-              >
-                Preparar pedido
-              </button>
-              <button
-                type="button"
-                data-testid="mark-as-delivered-btn"
-                onClick={ fullfilOrder }
-              >
-                Marcar como entregue
-              </button>
+      <div className="orderDetailsContainer">
+        {saleProducts && (
+          <>
+            <h1>
+              <div data-testid="order-number">
+                {`Pedido ${sale.id}`} <br />
+                <p className="orderDate">
+                  {
+                  `${new Date(Date.parse(sale.saleDate)).getDate()}/
+                  ${new Date(Date.parse(sale.saleDate)).getMonth()}/
+                  ${new Date(Date.parse(sale.saleDate)).getYear()}`
+                  }
+                </p>
+              </div>
+              <div className="orderStatus" data-testid="order-status">
+                ({sale && capitalize(sale.status)})
+              </div>
+            </h1>
+            <div className="sale-details">
+              <ul>
+                {saleProducts.map(({ quantity, productId }, index) => (
+                  <li key={ index }>
+                      Id do produto: {productId} (qtd: {quantity})
+                  </li>
+                ))}
+              </ul>
+              <h2 data-testid="order-total-value">
+                {sale && parseCartPrice(Number(sale.totalPrice))}
+              </h2>
             </div>
-          )}
 
-          {sale && sale.status === 'Preparando' && (
-            <div>
-              <button
-                type="button"
-                data-testid="mark-as-delivered-btn"
-                onClick={ fullfilOrder }
-              >
-                Marcar como entregue
-              </button>
-            </div>
-          )}
+            {sale && sale.status === 'Pendente' && (
+              <div className="buttonsContainer">
+                <button
+                  type="button"
+                  data-testid="mark-as-prepared-btn"
+                  onClick={ setAsPreparing }
+                >
+                  Preparar pedido
+                </button>
+                <button
+                  type="button"
+                  data-testid="mark-as-delivered-btn"
+                  onClick={ fullfilOrder }
+                >
+                  Marcar como entregue
+                </button>
+              </div>
+            )}
 
-        </>
-      )}
+            {sale && sale.status === 'Preparando' && (
+              <div className="buttonsContainer">
+                <button
+                  type="button"
+                  data-testid="mark-as-delivered-btn"
+                  onClick={ fullfilOrder }
+                >
+                  Marcar como entregue
+                </button>
+              </div>
+            )}
+
+          </>
+        )}
+      </div>
+      <div className="backButtonContainer">
+        <button className="backButton" onClick={() => history.goBack()}>Voltar</button>
+      </div>
     </div>
   );
 }
@@ -114,7 +120,7 @@ export default function AdminOrdersDetail({ match: { params: { id } } }) {
 AdminOrdersDetail.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,  
     }).isRequired,
   }).isRequired,
 };

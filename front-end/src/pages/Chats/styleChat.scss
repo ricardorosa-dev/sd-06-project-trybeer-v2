@@ -1,0 +1,125 @@
+@import '../../assets/scss/variables.scss';
+
+.listaBoxContainer {
+  border: 1px solid;
+  padding: 20px;
+  font-family: $main-font;
+  
+  h1 {
+    font-size: 8vw;
+    
+    @media (min-width: 600px) {
+      font-size: 4vw;
+    }
+  }
+  
+  .containerBox {
+    font-size: 6vw;
+    
+    a {
+      text-decoration: none;
+      font-weight: 800;
+      color: white;
+    }
+    
+    .containerChat {
+      background-color: $lightGreen;
+      color: white;
+      padding: 5px;
+      border-radius: 5px 20px;
+      margin: 15px 0;
+      padding: 5px 15px;
+      
+      .profileName {
+        margin: 10px 0;
+        
+        @media (min-width: 600px) {
+          font-size: 4vw;
+        }
+      }
+    }
+    
+    .lastMessage {
+      @media (min-width: 600px) {
+        font-size: 3vw;
+      }
+    }
+  }
+}
+
+.messageBox {
+  // border: 1px solid red;
+  height: 500px;
+  overflow-y: scroll;
+  width: 100%;
+  
+  ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  li {
+    margin: 5px;
+    list-style-type: none;
+    padding: 0 15px;
+    width: 80%;
+    font-family: $main-font;
+    font-weight: 400;
+  }
+  
+  .userMessage {
+    text-align: right;
+    align-self: flex-end;
+    background-color: $darkGreen;
+    color: white;
+    border-radius: 15px 30px 5px 30px;
+  }
+  
+  .adminMessage {
+    border-radius: 30px 15px 30px 5px;
+    background-color: $lightGray;
+    color: $darkGreen;
+  }
+  
+  p {
+    margin: 5px 10px;
+    font-size: 20px;
+  }
+  
+  .nickname {
+    font-weight: 600;
+    font-size: 17px;
+  }
+  
+  .message-time {
+    font-size: 14px;
+  }
+}
+
+form {
+  // border: 1px solid;
+  display: flex;
+  flex-direction: row;
+  
+  input {
+    flex-grow: 8;
+    font-family: $main-font;
+    font-size: 28px;
+    padding: 5px;
+  }
+  
+  button {
+    flex-grow: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+  }
+  
+  button {
+    font-size: 8vw;
+  }
+}

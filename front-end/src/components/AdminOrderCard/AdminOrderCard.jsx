@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './AdminOrderCard.css';
+import './AdminOrderCard.scss';
 import capitalize from '../../utils/capitalize';
 
 export default function AdminOrderCard({ sale, index }) {

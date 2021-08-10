@@ -25,6 +25,7 @@ const getSales = () => fetch(`${endpoint}/sales`)
 const getAdminSaleDetails = async (id) => {
   const response = await fetch(`${endpoint}/sales/admin/details/${id}`);
   const result = await response.json();
+  console.log(result);
   return result;
 };
 

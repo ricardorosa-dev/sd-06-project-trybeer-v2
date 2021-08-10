@@ -1,4 +1,4 @@
-const { endpoint } = require('./utils');
+const { endpoint, endpointMongo } = require('./utils');
 
 const applicationJsonContent = 'application/json';
 
@@ -10,7 +10,6 @@ const login = (email, password) => fetch(`${endpoint}/user/login`, {
   body: JSON.stringify({ email, password }),
 })
   .then((response) => response.json());
-// .then(result => result);
 
 const register = (name, email, password, role) => fetch(`${endpoint}/user/register`, {
   method: 'post',
@@ -18,6 +17,16 @@ const register = (name, email, password, role) => fetch(`${endpoint}/user/regist
     'Content-type': applicationJsonContent,
   },
   body: JSON.stringify({ name, email, password, role }),
+})
+  .then((response) => response.json());
+
+// Registrar no MongoDB
+const registerOnMongo = (name, email, level) => fetch(`${endpointMongo}/chat/users`, {
+  method: 'post',
+  headers: {
+    'Content-type': applicationJsonContent,
+  },
+  body: JSON.stringify({ name, email, level }),
 })
   .then((response) => response.json());
 
@@ -37,12 +46,13 @@ const userOrders = (emailUser) => fetch(`${endpoint}/user/orders`, {
     email: emailUser,
   },
 }).then((response) => response.json())
-  .then((data) => data);
-// .then((teste) => console.log(teste))
+  .then((data) => data)
+  // .then((teste) => console.log(teste));
 
 module.exports = {
   login,
   register,
+  registerOnMongo,
   updateUser,
   userOrders,
 };

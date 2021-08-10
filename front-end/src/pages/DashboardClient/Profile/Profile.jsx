@@ -4,6 +4,7 @@ import Header from '../../../components/Header/Header';
 import Input from '../../../components/Input/Input';
 import { updateUser } from '../../../services/Users';
 import { updateName, verifyUser } from '../../../store/LocalStorage/actions';
+import './Profile.scss';
 
 const handleSaveButton = async ({
   userName,
@@ -41,7 +42,8 @@ export default function Profile() {
   return (
     <div>
       <Header title="Meu perfil" user="client" />
-      <form>
+      <form className="profileForm">
+        <h2>Editar o nome:</h2>
         <Input
           title="Name"
           value={ userName }
@@ -49,6 +51,7 @@ export default function Profile() {
           onChange={ setField }
         />
         <Input
+          className="disabledButton"
           title="Email"
           value={ userEmail }
           testId="profile-email-input"

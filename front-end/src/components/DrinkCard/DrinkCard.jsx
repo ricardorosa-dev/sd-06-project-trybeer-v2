@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { parseCartPrice } from '../../utils/parseValues';
-
-import { addItem,
-  subtractItem,
-  setCart } from '../../store/LocalStorage/actions';
-import { getCart,
-  getFullCartPrice } from '../../store/LocalStorage/provider';
-import './drinkCard.css';
+import { addItem, subtractItem, setCart } from '../../store/LocalStorage/actions';
+import { getCart, getFullCartPrice } from '../../store/LocalStorage/provider';
+import { NINETEEN } from '../../services/magicNumbers';
+import './drinkCard.scss';
 
 const syncStorageWithCart = (cartItem, id) => {
-  const newCartItem = { ...cartItem, default_product: false };
+  const date = (new Date()).toISOString().slice(0, NINETEEN)
+      .replace(/-/g, '/')
+      .replace('T', ' ');
+  const newCartItem = { ...cartItem, default_product: false, saleDate: date };
   const oldStorage = getCart();
   let newStorage = [];
   if (newCartItem) {
@@ -61,39 +61,47 @@ export default function DrinkCard({ product, index, setCartSum }) {
   }, [cartItem, id, setCartSum]);
 
   return (
-    <div>
+    <div className="productCard">
       <p
         className="price-tag"
         data-testid={ `${index}-product-price` }
       >
         {parseCartPrice(price)}
       </p>
-      <img
-        className="card-img"
-        data-testid={ `${index}-product-img` }
-        alt={ `${name} product card` }
-        src={ urlImage }
-      />
+      <div className="imageAndButtons">
+        <button
+            type="button"
+            className="plus-button"
+            data-testid={ `${index}-product-plus` }
+            onClick={ () => addItem(cartItem, setCartItem) }
+          >
+            +
+          </button>
+          
+          <div className="imageContainer">
+            <img
+            // className="card-img"
+            data-testid={ `${index}-product-img` }
+            alt={ `${name} product card` }
+            src={ urlImage }
+            />
+          </div>
+        
+        <button
+            type="button"
+            className="minus-button"
+            data-testid={ `${index}-product-minus` }
+            onClick={ () => subtractItem(cartItem, setCartItem) }
+          >
+            &#8722;
+          </button>
+      </div>
+      
       <p className="name-tag" data-testid={ `${index}-product-name` }>{name}</p>
       <div>
-        <button
-          type="button"
-          className="plus-button"
-          data-testid={ `${index}-product-plus` }
-          onClick={ () => addItem(cartItem, setCartItem) }
-        >
-          +
-        </button>
-        <div data-testid={ `${index}-product-qtd` }>{cartItem.quantity}</div>
-        <button
-          type="button"
-          className="minus-button"
-          data-testid={ `${index}-product-minus` }
-          //  VOLTAR PRO SUBTRACT ITEM
-          onClick={ () => subtractItem(cartItem, setCartItem) }
-        >
-          -
-        </button>
+        <div className="quantity-tag" data-testid={ `${index}-product-qtd` }>
+          {`Quantidade: ${cartItem.quantity}`}
+        </div>
       </div>
 
     </div>

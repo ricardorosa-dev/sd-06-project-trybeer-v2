@@ -3,42 +3,31 @@ import { useHistory } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import Checkbox from '../../components/checkbox/Checkbox';
-import { register } from '../../services/Users';
+import { register, registerOnMongo } from '../../services/Users';
 import { validateEmail, validatePassword, validateName } from '../../utils/validations';
-import './Register.css';
+import './Register.scss';
+import loadingGif from '../../assets/gifs/loading.gif';
 
 const inputComponents = [
   {
     title: 'Nome',
     type: 'text',
     testId: 'signup-name',
-    placeholder: 'Seu nome',
+    placeholder: 'Nome',
   },
   {
     title: 'Email',
     type: 'text',
     testId: 'signup-email',
-    placeholder: 'Informe o email do Usuário',
+    placeholder: 'Email',
   },
   {
     title: 'Senha',
     type: 'password',
     testId: 'signup-password',
-    placeholder: 'Informe a senha',
+    placeholder: 'Senha',
   },
 ];
-
-const registerRedirect = async (
-  { name, email, password, isSeller, history },
-  setFetchEmail) => {
-  const role = isSeller ? 'administrator' : 'client';
-  const result = await register(name, email, password, role);
-  if (result.message) return setFetchEmail(result.message);
-  localStorage.setItem('user', JSON.stringify(result));
-  if (result.role === 'administrator') return history.push('/admin/orders');
-  if (result.role === 'client') return history.push('/products');
-  return null;
-};
 
 const setStateSwitch = ({ field, value, setEmail, setPassword, setName }) => {
   if (field === 'Email') return setEmail(value);
@@ -53,9 +42,9 @@ export default function Register() {
   const [name, setName] = useState('');
   const [isSeller, setIsSeller] = useState(false);
   const [fetchEmail, setFetchEmail] = useState('');
+  const [loading, setLoading] = useState('');
   const history = useHistory();
   useEffect(() => {
-    console.log('entrou no user effect');
     if (validateEmail(email) && validatePassword(password) && validateName(name)) {
       setIsDisabled(false);
     }
@@ -64,30 +53,66 @@ export default function Register() {
     setStateSwitch({ field, value, setEmail, setPassword, setName });
   };
   const inputValues = [name, email, password];
+
+  const registerRedirect = async (
+    { name, email, password, isSeller, history },
+    setFetchEmail) => {
+    setLoading(true);
+    const role = isSeller ? 'administrator' : 'client';
+    const result = await register(name, email, password, role);
+    console.log(result)
+
+    // Cadastra no MongoDB
+    await registerOnMongo(name, email, role);
+
+    if (result.message) return setFetchEmail(result.message);
+    localStorage.setItem('user', JSON.stringify(result));
+    if (result.role === 'administrator') return history.push('/admin/orders');
+    if (result.role === 'client') return history.push('/products');
+    return null;
+  };
+
   return (
-    <form className="inputs">
-      {inputComponents.map((component, index) => (
-        <Input
-          key={ index }
-          title={ component.title }
-          type={ component.type }
-          testId={ component.testId }
-          placeholder={ component.placeholder }
-          value={ inputValues[index] }
-          onChange={ setField }
-        />
-      ))}
-      <Checkbox isSeller={ isSeller } setIsSeller={ setIsSeller } />
-      <Button
-        title="Cadastrar"
-        testId="signup-btn"
-        isDisabled={ isDisabled }
-        onClick={ () => registerRedirect(
-          { name, email, password, isSeller, history },
-          setFetchEmail,
-        ) }
-      />
-      {fetchEmail && (<div>{fetchEmail}</div>)}
-    </form>
+    <div>
+      {(loading)
+        ? (
+          <img src={ loadingGif } className="loading-gif" alt="loading" />
+        )
+        : (
+          <div className="register-bg">
+            <form className="register-inputs">
+              {inputComponents.map((component, index) => (
+                <Input
+                  key={ index }
+                  title={ component.title }
+                  type={ component.type }
+                  testId={ component.testId }
+                  placeholder={ component.placeholder }
+                  value={ inputValues[index] }
+                  onChange={ setField }
+                />
+              ))}
+              <Checkbox class="is-seller" isSeller={ isSeller } setIsSeller={ setIsSeller } />
+              <Button
+                title="Cadastrar"
+                testId="signup-btn"
+                isDisabled={ isDisabled }
+                onClick={ () => registerRedirect(
+                  { name, email, password, isSeller, history },
+                  setFetchEmail,
+                ) }
+              />
+              <Button
+                title="Voltar"
+                className="cancelRegister"
+                onClick={history.goBack}
+              >
+                Voltar
+              </Button>
+              {fetchEmail && (<div>{fetchEmail}</div>)}
+            </form>
+          </div>
+        )}
+    </div>
   );
 }

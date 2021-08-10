@@ -1,0 +1,17 @@
+@import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
+
+.side-menu-container {
+  font-family: $main-font;
+  position: absolute;
+  background: green;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 50vw;
+  transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.active {
+  background-color: blue;
+}

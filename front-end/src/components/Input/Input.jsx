@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
  */
 const Input = ({ title, type, testId, onChange, value, placeholder, isReadOnly }) => (
   <label htmlFor={ title }>
-    {title}
     <input
       id={ title }
       type={ type }

@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+.geral {
+  padding: 0 30px;
+  border: 1px solid;
+  margin: 1.5rem;
+  color: #255923;
+  font-family: 'Montserrat', sans-serif;
+  font-size: calc(15px + 1.7vw);
+}
+
+.subtotal {
+  margin: 0;
+}
+
+.title-div {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  justify-content: space-between;
+  padding-left: 4%;
+}
+
+.detalhes {
+  display: flex;
+  justify-content: space-around;
+  border: 5px ridge #F2BA52;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: calc(10px + 1.7vw);
+  box-shadow: 4px 4px 4px rgb(204, 204, 204);
+}
+
+.div-date-details {
+  display: flex;
+  flex-direction: row;
+  width: 35%;
+}
+
+.calendario-details {
+  width: 30%;
+  height: 55%;
+  padding-top: 13%;
+  padding-right: 2%;
+}
+
+.resumo {
+  border: 1px solid red;
+  color: #255923;
+  display: flex;
+  flex-direction: row;
+  width: 35%;
+  padding-left: 60%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.total-price {
+  width: 30%;
+  height: 60%;
+  padding-top: 8%;
+  padding-right: 2%;
+}
+
+.value-price {
+  padding-top: 3%;
+}

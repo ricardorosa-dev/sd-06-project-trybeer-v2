@@ -10,6 +10,7 @@ import CheckoutCard from '../../../components/checkoutCard/CheckoutCard';
 import AddressForm from './AddressForm';
 import { parseCartPrice } from '../../../utils/parseValues';
 import { TWO_THOUSAND, NINETEEN } from '../../../services/magicNumbers';
+import './Checkout.scss';
 
 const Checkout = (props) => {
   const { location } = props;
@@ -46,14 +47,16 @@ const Checkout = (props) => {
     setCart(newState);
     const newCart = JSON.parse(localStorage.getItem('cart'));
     let newValue = 0;
+    // console.log(newCart);
     newCart.map((product) => {
-      newValue += Number(product.price);
+      newValue += (Number(product.price) * product.quantity);
       return newValue;
     });
     setSum(parseCartPrice(newValue));
   };
 
   const makeSale = async () => {
+    // console.log(user);
     const date = (new Date()).toISOString().slice(0, NINETEEN)
       .replace(/-/g, '/')
       .replace('T', ' ');
@@ -84,38 +87,59 @@ const Checkout = (props) => {
     <div>
       {(saleDone)
         ? (
-          <h1>{saleDone}</h1>
+          <div className="saleDone">
+            <h1>{saleDone}</h1>
+          </div>
         )
         : (
           <div>
-            <Header title="Finalizar Pedido" user="client" />
-            <h3>Produtos</h3>
-            {
-              (cart.length)
-                ? (
-                  cart.map((product, index) => (
-                    <CheckoutCard
-                      product={ product }
-                      changeState={ changeState }
-                      key={ index }
-                      specialNumber={ index }
-                    />
-                  ))
-                )
-                : (<h2>Não há produtos no carrinho</h2>)
-            }
-            <span data-testid="order-total-value">
-              Total:
-              {mySum}
-            </span>
-            <h3>Endereço</h3>
-            <AddressForm handleChange={ handleChange } />
-            <Button
-              title="Finalizar pedido"
-              isDisabled={ chkButton }
-              testId="checkout-finish-btn"
-              onClick={ () => makeSale() }
-            />
+            <Header title="Carrinho" user="client" />
+            {/* <h3>Produtos</h3> */}
+            <div className="productsOnCart">
+                {
+                  (cart.length)
+                    ? (
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Qtd.</th>
+                            <th>Item</th>
+                            <th>Preço total</th>
+                            <th>Preço unit.</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cart.map((product, index) => (
+                            <CheckoutCard
+                              product={ product }
+                              changeState={ changeState }
+                              key={ index }
+                              specialNumber={ index }
+                            />
+                          ))}
+                        </tbody>
+                      </table>
+                    )
+                    : (
+                    <div className="nothingOnCart">
+                      <h2>Não há produtos no carrinho</h2>
+                    </div>
+                      )
+                }
+            </div>
+            <div className="cartTotal" data-testid="order-total-value">
+              Total: {mySum}
+            </div>
+            <div className="addressBox">
+              <h2>Adicione um endereço</h2>
+              <AddressForm handleChange={ handleChange } />
+              <Button
+                title="Finalizar pedido"
+                isDisabled={ chkButton }
+                testId="checkout-finish-btn"
+                onClick={ () => makeSale() }
+              />
+            </div>
           </div>
         )}
     </div>

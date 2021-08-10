@@ -3,11 +3,14 @@ import { useHistory } from 'react-router-dom';
 import Header from '../../../components/Header/Header';
 import { userOrders } from '../../../services/Users';
 import { verifyUser } from '../../../store/LocalStorage/actions';
-import { parseCartPrice, correctDate } from '../../../utils/parseValues';
-import './Orders.css';
+import { parseCartPrice } from '../../../utils/parseValues';
+import dateIcon from './dateIcon.png';
+import price from './price.png';
+import prendedor from './prendedor.jpg';
+import './Orders.scss';
 
 export default function Orders() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([{}]);
   const history = useHistory();
 
   useEffect(() => {
@@ -24,9 +27,9 @@ export default function Orders() {
   const redirectOrder = (id) => history.push(`/orders/${id}`);
 
   return (
-    <div>
+    <div className="div-pedidos">
       <Header title="Meus Pedidos" user="client" />
-      <div>
+      <div className="ordersContainer">
         {orders.map((order, index) => (
           <div
             role="button"
@@ -37,17 +40,31 @@ export default function Orders() {
             onKeyDown={ () => redirectOrder(order.id) }
             className="orders"
           >
-            <h3 data-testid={ `${index}-order-number` }>{`Pedido ${order.id}`}</h3>
-            <h4
-              data-testid={ `${index}-order-date` }
-              className="date-order"
-            >
-              {correctDate(order.saleDate)}
-            </h4>
-            <h3>{order.status}</h3>
-            <h4 data-testid={ `${index}-order-total-value` }>
-              {parseCartPrice(order.totalPrice)}
-            </h4>
+            <div className="image">
+              <img className="prancheta" src={ prendedor } alt="prancheta" />
+            </div>
+            <div className="text-content">
+              <h2 className="pedido" data-testid={ `${index}-order-number` }>{`Pedido ${order.id}`}</h2>
+              <div className="div-date">
+                <img className="calendario" src={ dateIcon } alt="calendário" />
+                <h4
+                  data-testid={ `${index}-order-date` }
+                  className="date-orders textos-pedidos"
+                >
+                  {
+                    `${new Date(Date.parse(order.saleDate)).getDate()}/
+                    ${new Date(Date.parse(order.saleDate)).getMonth()}/
+                    ${new Date(Date.parse(order.saleDate)).getYear()}`
+                  }
+                </h4>
+              </div>
+              <div className="div-price">
+                <img className="price" src={ price } alt="etiqueta de preço" />
+                <h4 className="textos-pedidos" data-testid={ `${index}-order-total-value` }>
+                  { parseCartPrice(parseInt(order.totalPrice)) }
+                </h4>
+              </div>
+            </div>
           </div>
         ))}
       </div>

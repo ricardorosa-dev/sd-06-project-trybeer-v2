@@ -2,32 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import socket from './socketClient';
 import { verifyUser } from '../../store/LocalStorage/actions';
-// import { sendMessage } from './Requests';
-import './styleChat.css';
+import Header from '../../components/Header/Header';
+import './styleChat.scss';
 
 export default function ChatClient() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
-  // const [att, setAtt] = useState(0);
   const [emailUser, setEmail] = useState('');
-  // socket.emit('message', 'minha mensagem incrivel!');
-  // // recebe msg do back
-  // socket.on('mensagem', (msg) => {
-  //   console.log(msg, 'msg');
-  // });
 
-  // socket.on('Mensagem do admin pro cliente', () => {
-  //   setAtt(att + 1);
-  // });
-
-  socket.on('messages', async ({ user, time, message, Loja }) => {
-    // console.log(userBack, time, msg, Loja);
-    setMessages([...messages, { user, time, message, Loja }]);
+  socket.on('messages', async ({ from, to, message, time }) => {
+    setMessages([...messages, { from, to, message, time }]);
   });
 
   const history = useHistory();
   const getAllMessages = async (email) => {
-    const allMessages = await fetch(`http://localhost:4001/chat/userMessages/${email}`);
+    const allMessages = await fetch(`http://localhost:4001/chat/messages/${email}`);
     const allMsg = await allMessages.json();
     setMessages(allMsg);
   };
@@ -37,25 +26,27 @@ export default function ChatClient() {
     setEmail(email);
     getAllMessages(email);
   }, [history]);
+  
+  useEffect(() => {
+    const scrollBox = document.getElementsByClassName("messageBox")[0];
+    scrollBox.scrollTop = scrollBox.scrollHeight;
+  }, [messages])
 
   const newMessage = async () => {
-    // const hora = new Date().toLocaleTimeString().split(':');
-    // const time = `${hora[0]}:${hora[1]}`;
-    console.log(emailUser, inputValue);
     socket.emit('message', ({
-      user: emailUser,
+      from: emailUser,
+      to: 'tryber@trybe.com.br',
       message: inputValue,
-      Loja: 'Loja',
     }));
+    
+    const myMessage = messages;
+    console.log(myMessage);
   };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     newMessage();
     setInputValue('');
-    // getAllMessages(emailUser);
-    // setAtt(att + 12);
-    // socket.emit('clientMsg');
   };
 
   const handleChangeMessage = (value) => {
@@ -64,7 +55,33 @@ export default function ChatClient() {
 
   return (
     <div className="boxContainer">
-      <h1>Chat Client</h1>
+      <Header title="Chat com a Loja" user="client" />
+      {/* <h1>Chat Client</h1> */}
+      <div className="messageBox">
+        <ul>
+          {messages && messages.map((msg, index) => (
+            <li key={ index } className={(msg.from === emailUser) ? "userMessage" : "adminMessage"}>
+              <p className="nickname" data-testid="nickname">
+                {(msg.from !== emailUser) ? "Loja" : msg.from }
+              </p>
+              <p className="message-time" data-testid="message-time">
+              {
+                `${new Date(Date.parse(msg.time)).getDate()}/
+                ${new Date(Date.parse(msg.time)).getMonth()}/
+                ${new Date(Date.parse(msg.time)).getFullYear()} - 
+                ${new Date(Date.parse(msg.time)).getHours()}:
+                ${new Date(Date.parse(msg.time)).getMinutes()}`
+              }
+                {/* {msg.time} */}
+              </p>
+              <p data-testid="text-message">
+                {msg.message}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
       <form>
         <input
           type="text"
@@ -80,23 +97,6 @@ export default function ChatClient() {
           Send
         </button>
       </form>
-      <div className="messageBox">
-        <ul>
-          {messages && messages.map((msg, index) => (
-            <li key={ index }>
-              <p data-testid="nickname">
-                {msg.user}
-              </p>
-              <p data-testid="message-time">
-                {msg.time}
-              </p>
-              <p data-testid="text-message">
-                {msg.message}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }

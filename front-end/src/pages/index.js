@@ -25,5 +25,6 @@ export {
 export {
   default as ClientProfile,
 } from './DashboardClient/Profile/Profile';
-export { default as ChatAdmin } from './Chats/ChatAdmin';
+export { default as ListaDeConversas } from './Chats/ListaDeConversas';
 export { default as ChatClient } from './Chats/ChatClient';
+export { default as DetailChat } from './Chats/AdminChatDetails';

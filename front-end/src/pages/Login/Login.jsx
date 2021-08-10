@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../services/Users';
-
-import './Login.css';
+import logoVerde from '../../assets/logos/logoVerde_limpa.png';
+import './Login.scss';
 
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
@@ -34,36 +34,48 @@ export default function Login() {
     return setPassword(value);
   };
   return (
-    <div className="loginForm">
-      <form className="loginInput">
-        <Input
-          title="Email"
-          type="text"
-          testId="email-input"
-          value={ email }
-          onChange={ setField }
-          placeholder="Informe o email do Usuário"
-        />
-        <Input
-          title="Senha"
-          type="password"
-          testId="password-input"
-          value={ password }
-          onChange={ setField }
-          placeholder="Informe a senha"
-        />
-        <Button
-          title="Entrar"
-          testId="signin-btn"
-          isDisabled={ isDisabled }
-          onClick={ () => userRedirect(email, password, history) }
-        />
-        <Button
-          title="Ainda não tenho conta"
-          testId="no-account-btn"
-          onClick={ () => history.push('/register') }
-        />
-      </form>
-    </div>
+    <>
+      <div className="overlay" />
+      <div className="entrance" />
+      <section className="defaultPage">
+        <form className="loginForm">
+          <img src={ logoVerde } width="150px" className="logo" alt="logo" />
+          <section className="loginInputs">
+            <Input
+              title="Email"
+              type="text"
+              testId="email-input"
+              value={ email }
+              onChange={ setField }
+              placeholder="Email"
+              autocomplete="on"
+            />
+            <Input
+              title="Senha"
+              type="password"
+              testId="password-input"
+              value={ password }
+              onChange={ setField }
+              placeholder="Senha"
+              autocomplete="on"
+            />
+          </section>
+          <section className="loginButtons">
+            <Button
+              title="ENTRAR"
+              testId="signin-btn"
+              isDisabled={ isDisabled }
+              onClick={ () => userRedirect(email, password, history) }
+              className="golden"
+            />
+            <Button
+              title="CRIAR CONTA"
+              testId="no-account-btn"
+              onClick={ () => history.push('/register') }
+            />
+          </section>
+        </form>
+      </section>
+    </>
   );
 }

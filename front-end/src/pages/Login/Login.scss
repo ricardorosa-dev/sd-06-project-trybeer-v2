@@ -1,0 +1,106 @@
+@import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
+
+
+.loginForm {
+  @include flexBox(column, space-around);
+  font-family: $main-font;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/images/bgs/bg2.jpg');
+  background-size: cover;
+
+  .logo, .loginInputs, .loginButtons {
+    font-family: $main-font;
+    z-index: 2;
+  }
+
+  .loginInputs, .loginButtons {
+    @include flexBox(column, space-around);
+    height: 15vh;
+  }
+
+
+  .logo {
+    animation-name: fadeIn;
+    animation-delay: 1s;
+    animation-duration: 5s; 
+    animation-fill-mode: both;
+  }
+
+  .loginInputs {    
+    animation-name: fadeIn;
+    animation-delay: 2s;
+    animation-duration: 5s; 
+    animation-fill-mode: both;
+    
+    input {
+      font-size: 1.5em;
+    }
+  }
+
+  .loginButtons {
+    animation-name: fadeIn;
+    animation-delay: 3.5s;
+    animation-duration: 2s; 
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.36,.46,.66,.2);
+    
+    button {
+      font-size: 1em;
+      color: $darkerGreen;
+    }
+  }
+}
+
+
+.entrance {
+  background-image: url('../../assets/images/bgs/beer_bg_gif.gif');
+  background-size: 150%;
+  // height: 1000px;
+  // width: 1000px;
+  height: 1200px;
+  width: 100vw;
+  position: fixed;
+  z-index: 3;
+  animation-name: antre;
+  animation-duration: 4s; 
+  animation-fill-mode: forwards;
+}
+
+@media (max-width: 600px) {
+  .entrance {
+    background-repeat: no-repeat;
+    background-size: cover;
+    // height: 200vh;
+    // width: 100vw;
+  }
+}
+
+@keyframes antre {
+  0% {
+    top: -35vh;
+    display: block;
+  }
+
+  99% {
+    top: 100vh;
+    display: block;
+
+  }
+
+  100% {
+    top: 100vh;
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0%
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}

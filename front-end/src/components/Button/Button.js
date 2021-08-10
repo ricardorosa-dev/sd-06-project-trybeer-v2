@@ -21,7 +21,6 @@ const Button = ({ title, isDisabled, testId, onClick, userRole }) => (
 Button.propTypes = {
   title: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
-  testId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   userRole: PropTypes.string,
 

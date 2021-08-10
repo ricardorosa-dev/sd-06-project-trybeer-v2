@@ -39,7 +39,7 @@ jobs:
       mysql:
         image: mysql:8.0.21
         env:
-          MYSQL_ROOT_PASSWORD: 'password'
+          MYSQL_ROOT_PASSWORD: '22316bnmop'
         ports:
           - 3306:3306
           - 33060:33060
